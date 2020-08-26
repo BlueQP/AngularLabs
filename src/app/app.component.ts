@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { User } from "./models/user.model";
+import { UserHelper } from "./helpers/userHelper.helper";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,24 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'week4tut';
+  user = null;
+  isLoggedIn = false;
+  private userSubscription;
+  private isLoggedInSubscription;
+
+  constructor(private userHelper:UserHelper, private router: Router){
+    this.userSubscription = this.userHelper.getUser().subscribe(user => this.user = user);
+    this.isLoggedInSubscription = this.userHelper.getIsUserLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+  }
+
+  public logOff() {
+    sessionStorage.removeItem('user');
+    this.userHelper.refreashSession();
+    this.router.navigateByUrl('/');
+  }
+
+  ngOnDestory(){
+    this.userSubscription.unsubsribe();
+    this.isLoggedInSubscription.unsubsribe();
+  }
 }

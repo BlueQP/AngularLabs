@@ -1,0 +1,35 @@
+<h1>
+    Edit user profile
+</h1>
+<ng-template [ngIf]="!isUserValid">
+    <h2 class="alert alert-danger">Your Account is Banned</h2>
+</ng-template>
+<form>
+    <fieldset [disabled]="!isUserValid">
+        <div class="form-group row">
+            <label for="inputUsername" class="col-sm-2 col-form-label">User Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputUsername" placeholder="user name" name="user.username" [(ngModel)]="user.username">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputBirthdate" class="col-sm-2 col-form-label">Birthdate</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputBirthdate" placeholder="birthdate" name="user.birthdate" [(ngModel)]="user.birthdate">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputAge" class="col-sm-2 col-form-label">Age</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputAge" placeholder="age" name="user.age" [(ngModel)]="user.age">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="user.email" [(ngModel)]="user.email">
+            </div>
+        </div>
+    </fieldset>
+    <button type="submit" class="btn btn-primary" (click)='saveUser()'>Save</button>
+</form>

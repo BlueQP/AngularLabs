@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginInfo } from '../models/loginInfo.model';
+import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { AuthService } from "../services/authentication/auth.service";
+import { first } from "rxjs/operators";
+import { UserHelper } from "../helpers/userHelper.helper";
 
 @Component({
   selector: 'app-login',
@@ -8,31 +11,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  email:string = "";
-  password:string = "";
+  public user: User = new User();
 
-  demoLogin1:LoginInfo = {email: "1@t.c", password: "1"};
-  demoLogin2:LoginInfo = {email: "2@t.c", password: "2"};
-  demoLogin3:LoginInfo = {email: "3@t.c", password: "3"};
+  public errorMessageClass = "hidden";
+  private ERROR_MESSAGE_CLASS_SHOW_VALUE = "show";
+  private ERROR_MESSAGE_CLASS_HIDE_VALUE = "hidden";
 
-  demoUsers = [this.demoLogin1, this.demoLogin2, this.demoLogin3];
-
-  errorMessageClass = "hidden";
-  ERROR_MESSAGE_CLASS_SHOW_VALUE = "show";
-
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService, private userHelper:UserHelper) { }
 
   ngOnInit(): void {
   }
 
   loginSubmit(): void{
     var loginUser = null;
-    loginUser = this.demoUsers.find(u => u.email == this.email);
-    if (loginUser!=null) {
-      if (loginUser.password == this.password){
-        this.router.navigateByUrl('/account');
-      }
-    }
-    this.errorMessageClass = this.ERROR_MESSAGE_CLASS_SHOW_VALUE;
+     this.authService.authenticate(this.user).pipe(first()).subscribe(
+       data => {
+         if (data.userLogin.status){
+          this.errorMessageClass = this.ERROR_MESSAGE_CLASS_HIDE_VALUE;
+          this.userHelper.refreashSession();
+          this.router.navigateByUrl('/');
+         }
+         else {
+          this.errorMessageClass = this.ERROR_MESSAGE_CLASS_SHOW_VALUE;
+         }
+       }
+     );
   }
 }

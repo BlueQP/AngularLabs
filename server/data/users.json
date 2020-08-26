@@ -1,0 +1,26 @@
+[
+    {
+        "username": "u1@t.c",
+        "password": "1",
+        "age": 1,
+        "email": "u1@t.c",
+        "valid": true,
+        "birthdate": "01/01/0001"
+    },
+    {
+        "username": "u2@t.c",
+        "password": "2",
+        "age": 2,
+        "email": "u2@t.c",
+        "valid": true,
+        "birthdate": "02/02/0002"
+    },
+    {
+        "username": "u3@t.c",
+        "password": "3",
+        "age": 3,
+        "email": "u3@t.c",
+        "valid": false,
+        "birthdate": "03/03/0003"
+    }
+]
