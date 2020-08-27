@@ -14,4 +14,4 @@
     </div>
     <button type="submit" class="btn btn-primary" (click)="loginSubmit()">Submit</button>
 </form>
-  <p class="{{errorMessageClass}}">Login does not match.</p>
+  <p class="{{errorMessageClass}}">{{loginResponse.errorMessage}}</p>

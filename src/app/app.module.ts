@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserHelper } from "./helpers/userHelper.helper";
+import { AuthService } from "./services/authentication/auth.service";
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import { UserHelper } from "./helpers/userHelper.helper";
     HttpClientModule,
     FormsModule
   ],
-  providers: [UserHelper],
+  providers: [UserHelper, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from "./models/user.model";
 import { UserHelper } from "./helpers/userHelper.helper";
 import { Router } from '@angular/router';
@@ -16,8 +16,16 @@ export class AppComponent {
   private isLoggedInSubscription;
 
   constructor(private userHelper:UserHelper, private router: Router){
+    
+  }
+
+  ngOnInit(){
     this.userSubscription = this.userHelper.getUser().subscribe(user => this.user = user);
-    this.isLoggedInSubscription = this.userHelper.getIsUserLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+    this.isLoggedInSubscription = this.userHelper.getIsUserLoggedIn().subscribe(isLoggedIn => {
+        this.isLoggedIn = isLoggedIn;
+        console.log(this.isLoggedIn);}
+      );
+    
   }
 
   public logOff() {

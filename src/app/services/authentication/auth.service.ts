@@ -31,13 +31,21 @@ export class AuthService {
   }
   authenticate(userInfo:User){
       return this.httpClient.post<LoginResponse>(this.AUTH_URL, userInfo, this.HTTP_OPTIONS).pipe(map(userLogin => {
-        console.log("testing info - posted: " + userInfo);
-        console.log("testing info - login response: " + userLogin);
-        userLogin.user.password = "********";
-        if(userLogin.ok && userLogin.user.valid) {
-          sessionStorage.setItem("user", JSON.stringify(userLogin.user));
-          this.userSubject.next(userLogin.user);
-          userLogin.status = true;
+        console.log("testing info - posted: " + JSON.stringify(userInfo));
+        console.log("testing info - login response: " + JSON.stringify(userLogin));
+        if(userLogin.ok) {
+          if (userLogin.user.valid){
+            sessionStorage.setItem("user", JSON.stringify(userLogin.user));
+            this.userSubject.next(userLogin.user);
+            userLogin.status = true;
+            userLogin.user.password = "********";
+          }
+          else{
+            userLogin.errorMessage = "your account is banned";
+          }
+        }
+        else {
+          userLogin.errorMessage = "invalid log in credentials";
         }
         return {userLogin};
       }));

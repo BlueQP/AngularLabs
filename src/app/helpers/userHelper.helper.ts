@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { User } from "../models/user.model";
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class UserHelper{
-  public isLoggedIn = false;
-  public isUserValid = false;
+  public isLoggedIn:boolean;
+  public isUserValid:boolean;
   public user:User;
   private userObservable = new Subject<User>();
   private isLoggedInObservable = new Subject<boolean>();
